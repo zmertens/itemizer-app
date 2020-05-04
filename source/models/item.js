@@ -8,11 +8,7 @@ const itemSchema = new mongoose.Schema({
     },
     price: {
         type: Number,
-        default: false
-    },
-    currency: {
-        type: String,
-        required: false
+        default: 5.0
     },
     graphic: {
         type: Buffer
