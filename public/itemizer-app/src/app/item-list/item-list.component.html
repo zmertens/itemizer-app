@@ -1,7 +1,5 @@
-<p>item-list works! {{ str }} </p>
-
-<div class="div">
+<div id="item-list" class="container">
     <ul class="list-group" *ngFor="let item of items; let i = index">
-        <li> {{ i }} Description: {{ item.description }} ,  $ Price: {{ item.price }} </li>
+        <li (onSelect)="onSelect($event)"> <a> {{ i }} Description: {{ item.description }} ,  $ Price: {{ item.price }} </a></li>
     </ul>
 </div>

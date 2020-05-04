@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit {
     console.debug(`userEmail: ${userEmail}, userPassword: ${userPassword}`)
     this.itemServer.loginUser(userEmail, userPassword).subscribe((user) => {
       console.log(JSON.stringify(user))
+      this.isAuthenticated = true
     }, (error) => {
       console.error(error)
     })
