@@ -16,3 +16,28 @@
         </ul>
     </div>
 </nav>
+
+<div class="row">
+    <span></span>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <label for="email">email</label>
+        <input
+            name="email"
+            id="email"
+            class="form-control"
+            type="email"
+            placeholder="llama@mailinator.com"
+            ngModel required>
+        <label for="password">password</label>
+        <input
+            name="password"
+            id="password"
+            class="form-control"
+            type="password"
+            ngModel required>
+        <button
+            class="btn btn-success"
+            type="submit"
+            [disabled]="!f.valid"> {{ 'Submit' }} </button>
+    </form>
+</div>

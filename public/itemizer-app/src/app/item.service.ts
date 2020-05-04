@@ -15,4 +15,9 @@ export class ItemService {
   getItems(): Observable<Object> {
     return this.http.get(this.url + '/items');
   }
+
+  loginUser(userEmail, password): Observable<Object> {
+    return this.http.post(this.url + '/users/login',
+      {email: userEmail, password: password})
+  }
 }
