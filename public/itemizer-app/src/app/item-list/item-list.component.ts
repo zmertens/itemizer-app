@@ -29,4 +29,7 @@ export class ItemListComponent implements OnInit {
     })
   }
 
+  onSelect(i) {
+    console.log(`value of i: ${i}`)
+  }
 }
