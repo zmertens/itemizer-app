@@ -1,6 +1,4 @@
-const router = require('supertest')
 
-
-test('#Should work', async () => {
-    expect(10).toBe(10)
+test('# Cat is not a bat', async () => {
+    expect("cat").not.toMatch(/^bat/)
 })
