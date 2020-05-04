@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemService } from '../item.service';
+import { Item } from '../item.model'
 
 @Component({
   selector: 'app-item-list',
@@ -8,9 +9,16 @@ import { ItemService } from '../item.service';
 })
 export class ItemListComponent implements OnInit {
 
+  items = []
   str: String = ''
 
-  constructor(private itemService: ItemService) { }
+  constructor(private itemService: ItemService) {
+    const totalItems = 10
+    for (let i = 0; i < totalItems; i += 1) {
+      this.items.push(new Item('A description', 10.0))
+      console.log(this.items[i])
+    }
+  }
 
   ngOnInit(): void {
     this.itemService.getItems().subscribe((items) => {

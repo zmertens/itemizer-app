@@ -8,6 +8,7 @@ import { ItemListComponent } from './item-list/item-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ItemService } from './item.service';
 import { AddItemComponent } from './add-item/add-item.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AddItemComponent } from './add-item/add-item.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [ItemService],
   bootstrap: [AppComponent]
