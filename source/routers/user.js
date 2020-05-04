@@ -51,6 +51,10 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 })
 
 router.get('/users/me', auth, async (req, res) => {
+    if (!req.user) {
+        res.status(404).send('Passwed authentication but lost ourseleves')
+    }
+
     res.send(req.user)
 })
 
