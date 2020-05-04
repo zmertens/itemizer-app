@@ -1,0 +1,34 @@
+{
+  "name": "itemizer-app",
+  "version": "1.0.0",
+  "description": "This app creates inventory lists and tracks prices",
+  "main": "index.js",
+  "scripts": {
+    "start": "node source/index.js",
+    "dev": "env-cmd -f ./config/dev.env nodemon source/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "keywords": [
+    "todo",
+    "task-management",
+    "budget",
+    "notes",
+    "utility"
+  ],
+  "author": "zachmm",
+  "github": "github.com/zmertens/itemizer-app",
+  "license": "FreeBSD-3",
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "jest": "^25.4.0",
+    "nodemon": "^2.0.3",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.10"
+  }
+}
