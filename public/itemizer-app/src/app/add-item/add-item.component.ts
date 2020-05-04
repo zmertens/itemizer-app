@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add-item',
@@ -7,9 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddItemComponent implements OnInit {
 
+  editMode: Boolean = true;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onSubmit(f: NgForm) {
+    if (f.invalid) {
+      console.error(f)
+    }
+  }
+
+  onClear() {
+
+  }
+
+  onDelete() {
+
   }
 
 }
