@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ItemService } from './item.service';
 import { AddItemComponent } from './add-item/add-item.component';
 import { FormsModule } from '@angular/forms';
+import { UserService } from './user.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -21,9 +23,10 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
-  providers: [ItemService],
+  providers: [ItemService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
