@@ -9,48 +9,58 @@ import { Item } from './item.model';
   providedIn: 'root',
 })
 export class ItemService {
-  items = new BehaviorSubject<Item[]>(null);
+  private itemsSubject = new BehaviorSubject<Item[]>([
+    new Item(0, 'Sign in to make a list of items', 100.0),
+  ]);
+  items: Item[] = [];
   readonly url = environment.serverUrl;
 
   constructor(private http: HttpClient) {}
 
   createItem(item: Item, token: String) {
     const httpOptions = {
-      headers: new HttpHeaders({Authorization: token.toString()}),
-    }
-  
-    return this.http.post(this.url + '/items',
+      headers: new HttpHeaders({ Authorization: token.toString() }),
+    };
+
+    return this.http.post(
+      this.url + '/items',
       { description: item['description'], price: item['price'] },
-      httpOptions);
-      // .pipe(tap((item: Item) => console.log(`item: ${JSON.stringify(item)}`)), catchError(null));
+      httpOptions
+    );
   }
 
-  getItems(token: String) {
-    const header = new HttpHeaders({Authorization: token.toString()})
-    return this.http.get(this.url + '/items', { headers: header});
-      // .pipe(tap((item: Item) => console.log(`item: ${JSON.stringify(item)}`)), catchError(null));
+  getItems(token: String): Observable<void | Item[]> {
+    const header = new HttpHeaders({ Authorization: token.toString() });
+    return this.http.get(this.url + '/items', { headers: header }).pipe(
+      map((items: Item[]) => {
+        this.items.push(...items);
+        this.itemsSubject.next(this.items.slice());
+      }),
+      catchError(() => {
+        throw new Error(`Could not get items from: ${this.url}`);
+      })
+    );
   }
 
   updateItem(item: Item, token: String) {
     const httpOptions = {
-      headers: new HttpHeaders({Authorization: token.toString()}),
-      params: item['_id']
-    }
-  
-    return this.http.patch(this.url + '/items/:id',
+      headers: new HttpHeaders({ Authorization: token.toString() }),
+      params: item['_id'],
+    };
+
+    return this.http.patch(
+      this.url + '/items/:id',
       { description: item['description'], price: item['price'] },
-      httpOptions);
-      // .pipe(tap((item: Item) => console.log(`item: ${JSON.stringify(item)}`)), catchError(null));
+      httpOptions
+    );
   }
 
   deleteItem(item: Item, token: String) {
     const httpOptions = {
-      headers: new HttpHeaders({Authorization: token.toString()}),
-      params: item['_id']
-    }
-  
-    return this.http.delete(this.url + '/items/:id', httpOptions);
-      // .pipe(tap((item: Item) => console.log(`item: ${JSON.stringify(item)}`)), catchError(null));
-  }
+      headers: new HttpHeaders({ Authorization: token.toString() }),
+      params: item['_id'],
+    };
 
+    return this.http.delete(this.url + '/items/:id', httpOptions);
+  }
 }
