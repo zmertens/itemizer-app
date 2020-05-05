@@ -1,5 +1,10 @@
 <div id="item-list" class="container">
-    <ul class="list-group" *ngFor="let item of items; let i = index">
-        <li (onSelect)="onSelect($event)"> <a> {{ i }} Description: {{ item.description }} ,  $ Price: {{ item.price }} </a></li>
-    </ul>
+  <ul class="list-group" *ngFor="let item of items; let i = index">
+    <li href="#" (click)="onSelect($event)">
+      <a>
+        {{ i }} Description: {{ item._description }} , $ Price:
+        {{ item._price }}
+      </a>
+    </li>
+  </ul>
 </div>

@@ -9,21 +9,24 @@ import { Item } from '../item.model'
 })
 export class ItemListComponent implements OnInit {
 
-  items = []
+  items: Array<Item> = []
   str: String = ''
 
   constructor(private itemService: ItemService) {
-    const totalItems = 10
-    for (let i = 0; i < totalItems; i += 1) {
-      this.items.push(new Item('A description', 10.0))
-      console.log(this.items[i])
-    }
+
   }
 
   ngOnInit(): void {
-    this.itemService.getItems().subscribe((items) => {
-      console.log(JSON.stringify(items));
-      this.str = items['str'];
+    const authToken = 'Bearer ' + localStorage.getItem('authToken')
+    this.itemService.getItems(authToken).subscribe((items) => {
+      for (let i = 0; i < items.length; i += 1) {
+        items.push[new Item(items[i]['description'], items[i]['price'])]
+        console.log(items)
+      }
+      // console.log(JSON.stringify(items));
+      // items.forEach((item) => {
+      //   this.items.push[new Item(item['description'], item['price'])]
+      // })
     }, (error) => {
       console.error(error)
     })
