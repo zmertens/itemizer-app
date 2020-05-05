@@ -23,8 +23,7 @@ import { RouterModule } from '@angular/router';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    RouterModule
+    FormsModule
   ],
   providers: [ItemService, UserService],
   bootstrap: [AppComponent]

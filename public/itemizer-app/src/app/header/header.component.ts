@@ -41,8 +41,9 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.isAuthenticated = !this.isAuthenticated
     const token = 'Bearer ' + localStorage.getItem('authToken')
-    this.userService.logoutUser(token)
-    localStorage.setItem('authToken', '')
+    this.userService.logoutUser(token).subscribe((user) => {
+      localStorage.setItem('authToken', '')
+    })
   }
 
 }

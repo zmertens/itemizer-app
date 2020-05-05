@@ -9,11 +9,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./item-list.component.css']
 })
 export class ItemListComponent implements OnInit, OnDestroy {
-
-  items: Array<Item> = [new Item(1, 'cool item 1', 33.2),
-    new Item(2, 'jetplane (black)', 51.2),
-    new Item(3, 'yoyo (yellow)', 12.31)]
-  itemsSubscription: Subscription;
+  items: Item[] = []
+  private itemsSubscription: Subscription;
 
   constructor(private itemService: ItemService) {
 
@@ -21,14 +18,12 @@ export class ItemListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const authToken = 'Bearer ' + localStorage.getItem('authToken')
-    this.itemsSubscription = this.itemService.getItems(authToken).subscribe((items) => {
-      let itemsArr = JSON.parse(JSON.stringify(items));
-      itemsArr.entries((item: Item) => this.items.push(new Item(item['_id'],
-        item['description'], item['price'])));
-      this.itemService.items.next(this.items)
+    this.itemsSubscription = this.itemService.getItems(authToken).subscribe((items: Item[]) => {
+      this.items = items
     }, (error) => {
       console.error(error)
-    })
+    });
+    this.items = this.itemService.items;
   }
 
   ngOnDestroy(): void {
