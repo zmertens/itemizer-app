@@ -1,26 +1,56 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, tap, map } from 'rxjs/operators';
 import { environment } from '../environments/environment';
-import { Item } from 'item.model';
+import { Item } from './item.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ItemService {
-  items = new BehaviorSubject<Observable<Item>>(null);
+  items = new BehaviorSubject<Item[]>(null);
   readonly url = environment.serverUrl;
 
   constructor(private http: HttpClient) {}
 
-  getItems(token: String): Observable<Item> {
-    const header = new HttpHeaders({Authorization: token.toString()})
-    this.items.next(this.http.get(this.url + '/items', { headers: header}))
-    return this.items.getValue()
+  createItem(item: Item, token: String) {
+    const httpOptions = {
+      headers: new HttpHeaders({Authorization: token.toString()}),
+    }
+  
+    return this.http.post(this.url + '/items',
+      { description: item['description'], price: item['price'] },
+      httpOptions);
+      // .pipe(tap((item: Item) => console.log(`item: ${JSON.stringify(item)}`)), catchError(null));
   }
 
-  loginUser(userEmail, password): Observable<Object> {
-    return this.http.post(this.url + '/users/login',
-      {email: userEmail, password: password})
+  getItems(token: String) {
+    const header = new HttpHeaders({Authorization: token.toString()})
+    return this.http.get(this.url + '/items', { headers: header});
+      // .pipe(tap((item: Item) => console.log(`item: ${JSON.stringify(item)}`)), catchError(null));
   }
+
+  updateItem(item: Item, token: String) {
+    const httpOptions = {
+      headers: new HttpHeaders({Authorization: token.toString()}),
+      params: item['_id']
+    }
+  
+    return this.http.patch(this.url + '/items/:id',
+      { description: item['description'], price: item['price'] },
+      httpOptions);
+      // .pipe(tap((item: Item) => console.log(`item: ${JSON.stringify(item)}`)), catchError(null));
+  }
+
+  deleteItem(item: Item, token: String) {
+    const httpOptions = {
+      headers: new HttpHeaders({Authorization: token.toString()}),
+      params: item['_id']
+    }
+  
+    return this.http.delete(this.url + '/items/:id', httpOptions);
+      // .pipe(tap((item: Item) => console.log(`item: ${JSON.stringify(item)}`)), catchError(null));
+  }
+
 }

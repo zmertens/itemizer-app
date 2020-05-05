@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemService } from '../item.service';
+import { UserService } from '../user.service';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -11,7 +11,9 @@ export class HeaderComponent implements OnInit {
   localStorageEmail = '';
   isAuthenticated: Boolean = false;
 
-  constructor(private itemServer: ItemService) { }
+  items = []
+
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     const emailFromStorage = localStorage.getItem('email')
@@ -24,7 +26,7 @@ export class HeaderComponent implements OnInit {
     const userEmail = f.controls['email'].value
     const userPassword = f.controls['password'].value
     console.debug(`userEmail: ${userEmail}, userPassword: ${userPassword}`)
-    this.itemServer.loginUser(userEmail, userPassword).subscribe((user) => {
+    this.userService.loginUser(userEmail, userPassword).subscribe((user) => {
       console.log(JSON.stringify(user))
       this.isAuthenticated = true
       // @TODO use NGRX methods to store auth token
@@ -33,6 +35,14 @@ export class HeaderComponent implements OnInit {
     }, (error) => {
       console.error(error)
     })
+  
+  }
+
+  logout() {
+    this.isAuthenticated = !this.isAuthenticated
+    const token = 'Bearer ' + localStorage.getItem('authToken')
+    this.userService.logoutUser(token)
+    localStorage.setItem('authToken', '')
   }
 
 }
