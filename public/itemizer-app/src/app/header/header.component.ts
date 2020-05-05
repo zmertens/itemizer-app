@@ -27,6 +27,9 @@ export class HeaderComponent implements OnInit {
     this.itemServer.loginUser(userEmail, userPassword).subscribe((user) => {
       console.log(JSON.stringify(user))
       this.isAuthenticated = true
+      // @TODO use NGRX methods to store auth token
+      localStorage.setItem('authToken', user['token'])
+      console.log(`authToken: ${localStorage.getItem('authToken')}`)
     }, (error) => {
       console.error(error)
     })
