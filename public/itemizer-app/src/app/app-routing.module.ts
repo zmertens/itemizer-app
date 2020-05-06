@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ItemListComponent } from './item-list/item-list.component';
-import { AddItemComponent } from './add-item/add-item.component';
-import { AuthGuard } from './auth.guard';
+import { ItemListComponent } from './items/item-list/item-list.component';
+import { AddItemComponent } from './items/add-item/add-item.component';
+import { AuthGuard } from './user/auth.guard';
 import { UserComponent } from './user/user.component';
 
 
