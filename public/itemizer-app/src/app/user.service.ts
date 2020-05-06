@@ -50,6 +50,7 @@ export class UserService {
         map((user) => {
           console.log(`logging out user: ${JSON.stringify(user)}`);
           this.itemService.items = [];
+          return user;
         }),
         catchError(() => {
           throw new Error('Failed to log out user');
