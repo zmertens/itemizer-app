@@ -3,8 +3,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { User } from './user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../environments/environment';
-import { ItemService } from './item.service';
+import { environment } from '../../environments/environment';
+import { ItemService } from '../items/item.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -52,8 +52,8 @@ export class UserService {
           this.itemService.items = [];
           return user;
         }),
-        catchError(() => {
-          throw new Error('Failed to log out user');
+        catchError((err) => {
+          throw new Error('Failed to log out user: ' + err);
         })
       );
   }
