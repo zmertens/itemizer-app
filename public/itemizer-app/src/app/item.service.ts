@@ -31,7 +31,6 @@ export class ItemService {
     const header = new HttpHeaders({ Authorization: token.toString() });
     return this.http.get(this.url + '/items', { headers: header }).pipe(
       map((items: Item[]) => {
-        const modifyItems = this.items.every((item) => items.includes(item));
         if (items.length !== this.items.length) {
           // Using the spread operator we only copy and append unique items
           this.items.push(...items);

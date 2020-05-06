@@ -34,9 +34,7 @@ export class UserComponent implements OnInit, OnDestroy {
         // @TODO use NGRX methods to store auth token
         localStorage.setItem('authToken', user['token'])
         console.log(`authToken: ${localStorage.getItem('authToken')}`)
-        if (user) {
-          this.router.navigate(['items']);
-        }
+        this.router.navigate(['items']);
       }, (error) => {
         console.error(error)
       })
@@ -47,9 +45,7 @@ export class UserComponent implements OnInit, OnDestroy {
         // @TODO use NGRX methods to store auth token
         localStorage.setItem('authToken', user['token'])
         console.log(`authToken: ${localStorage.getItem('authToken')}`)
-        if (user) {
-          this.router.navigate(['items']);
-        }
+        this.router.navigate(['items']);
       }, (error) => {
         console.error(error)
       })

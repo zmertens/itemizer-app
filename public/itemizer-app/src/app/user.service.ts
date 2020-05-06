@@ -56,4 +56,8 @@ export class UserService {
         })
       );
   }
+
+  isLoggedIn(): Observable<User> {
+    return this.user.asObservable();
+  }
 }
