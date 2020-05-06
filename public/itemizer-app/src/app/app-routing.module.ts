@@ -6,9 +6,11 @@ import { AuthGuard } from './auth.guard';
 import { UserComponent } from './user/user.component';
 
 
-const routes: Routes = [{path:'', component: ItemListComponent, canActivate: [AuthGuard]},
+const routes: Routes = [
+  {path:'items', component: ItemListComponent, canActivate: [AuthGuard]},
   {path:'add-item', component: AddItemComponent, canActivate: [AuthGuard]},
   {path:'user', component: UserComponent},
+  {path:'', redirectTo: 'items', pathMatch: 'full'},
   {path:'**', redirectTo: '/'}];
 
 @NgModule({

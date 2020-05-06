@@ -37,6 +37,7 @@ export class ItemService {
           this.itemsSubject.next(this.items.slice());
           console.log(this.items);
         }
+        return items;
       }),
       catchError(() => {
         throw new Error(`Could not get items from: ${this.url}`);
