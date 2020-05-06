@@ -8,10 +8,8 @@ import { Item } from './item.model';
 @Injectable({
   providedIn: 'root',
 })
-export class ItemService {
-  private itemsSubject = new BehaviorSubject<Item[]>([
-    new Item(0, 'Sign in to make a list of items', 100.0),
-  ]);
+export class ItemService {  
+  private itemsSubject = new BehaviorSubject<Item[]>(null);
   items: Item[] = [];
   readonly url = environment.serverUrl;
 
@@ -33,8 +31,13 @@ export class ItemService {
     const header = new HttpHeaders({ Authorization: token.toString() });
     return this.http.get(this.url + '/items', { headers: header }).pipe(
       map((items: Item[]) => {
-        this.items.push(...items);
-        this.itemsSubject.next(this.items.slice());
+        const modifyItems = this.items.every((item) => items.includes(item));
+        if (items.length !== this.items.length) {
+          // Using the spread operator we only copy and append unique items
+          this.items.push(...items);
+          this.itemsSubject.next(this.items.slice());
+          console.log(this.items);
+        }
       }),
       catchError(() => {
         throw new Error(`Could not get items from: ${this.url}`);
