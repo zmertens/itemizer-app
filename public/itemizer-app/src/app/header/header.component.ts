@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   localStorageEmail = '';
   isAuthenticated: Boolean = false;
+  private userSubscription: Subscription;
 
   items = []
 
@@ -21,11 +24,17 @@ export class HeaderComponent implements OnInit {
       this.localStorageEmail = emailFromStorage
     }
 
-    if (localStorage.getItem('authToken') !== '') {
-      this.isAuthenticated = true;
-    } else {
-      this.isAuthenticated = false;
-    }
+    this.userSubscription = this.userService.isLoggedIn().subscribe((user: User) => {
+      if (localStorage.getItem('authToken') !== '') {
+        this.isAuthenticated = true;
+      } else {
+        this.isAuthenticated = false;
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
   }
 
   logout() {
