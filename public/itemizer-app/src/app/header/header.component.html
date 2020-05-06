@@ -3,14 +3,14 @@
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a routerLink="/items" class="navbar-brand">Itemizer</a>
+          <a routerLink="/" class="navbar-brand">Itemizer</a>
         </div>
       </div>
 
       <div class="row">
         <ul class="nav navbar-nav">
-          <li routerLinkActive="active" *ngIf="isAuthenticated">
-            <a routerLink="/">Authenticate</a>
+          <li routerLinkActive="active" *ngIf="!isAuthenticated">
+            <a routerLink="/user">Authenticate</a>
           </li>
           <li routerLinkActive="active" *ngIf="isAuthenticated">
             <a routerLink="/add-item">Add Item</a>
@@ -25,43 +25,5 @@
         </ul>
       </div>
     </nav>
-  </div>
-
-  <div *ngIf="!isAuthenticated" class="row">
-    <span></span>
-    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-      <div class="form-group">
-        <label for="email">email</label>
-        <input
-          name="email"
-          id="email"
-          class="form-control"
-          type="email"
-          placeholder="llama@mailinator.com"
-          ngModel
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="password">password</label>
-        <input
-          name="password"
-          id="password"
-          class="form-control"
-          type="password"
-          ngModel
-          required
-        />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-success" type="submit" [disabled]="!f.valid">
-          {{ "Login" }}
-        </button>
-        <span class="col-xs-5"></span>
-        <button class="btn btn-secondary" type="submit" [disabled]="!f.valid">
-          {{ "Signup" }}
-        </button>
-      </div>
-    </form>
   </div>
 </div>

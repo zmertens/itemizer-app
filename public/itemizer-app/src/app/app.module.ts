@@ -11,13 +11,15 @@ import { AddItemComponent } from './add-item/add-item.component';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './user.service';
 import { RouterModule } from '@angular/router';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     ItemListComponent,
-    AddItemComponent
+    AddItemComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

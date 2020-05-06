@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
-import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,36 +13,27 @@ export class HeaderComponent implements OnInit {
 
   items = []
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     const emailFromStorage = localStorage.getItem('email')
     if (emailFromStorage) {
       this.localStorageEmail = emailFromStorage
     }
-  }
 
-  onSubmit(f: NgForm) {
-    const userEmail = f.controls['email'].value
-    const userPassword = f.controls['password'].value
-    console.debug(`userEmail: ${userEmail}, userPassword: ${userPassword}`)
-    this.userService.loginUser(userEmail, userPassword).subscribe((user) => {
-      console.log(JSON.stringify(user))
-      this.isAuthenticated = true
-      // @TODO use NGRX methods to store auth token
-      localStorage.setItem('authToken', user['token'])
-      console.log(`authToken: ${localStorage.getItem('authToken')}`)
-    }, (error) => {
-      console.error(error)
-    })
-  
+    if (localStorage.getItem('authToken') !== '') {
+      this.isAuthenticated = true;
+    } else {
+      this.isAuthenticated = false;
+    }
   }
 
   logout() {
     this.isAuthenticated = !this.isAuthenticated
     const token = 'Bearer ' + localStorage.getItem('authToken')
     this.userService.logoutUser(token).subscribe((user) => {
-      localStorage.setItem('authToken', '')
+      localStorage.setItem('authToken', '');
+      this.router.navigate(['/']);
     })
   }
 

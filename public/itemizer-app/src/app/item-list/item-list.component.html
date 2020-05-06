@@ -2,8 +2,8 @@
   <ul class="list-group" *ngFor="let item of items; let i = index">
     <li href="#" routerLinkActive="active" (click)="onSelect(item)">
       <a [routerLink]="['add-item', i]">
-        {{ i }} Description: {{ item._description }} , $ Price:
-        {{ item._price }}
+        {{ i }} Description: {{ item.description }} , $ Price:
+        {{ item.price }}
       </a>
     </li>
   </ul>
