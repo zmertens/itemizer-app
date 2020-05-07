@@ -8,7 +8,7 @@
           id="description"
           class="form-control"
           name="description"
-          ngModel
+          [ngModel]="descModel"
           required
         />
       </div>
@@ -19,7 +19,7 @@
           id="price"
           class="form-control"
           name="price"
-          ngModel
+          [ngModel]="priceModel"
           required
           pattern="^[1-9]+[0-9]*$"
         />
@@ -38,9 +38,17 @@
         >
           Delete
         </button>
-        <button class="btn btn-primary" type="button" (click)="onClear()">
+        <button class="btn btn-primary" type="button" (click)="onClear(f)">
           Clear
         </button>
+        <div class="row">
+          <button id="cancel-btn" class="btn btn-secondary" type="button" (click)="cancel()">
+            Cancel
+          </button>
+          <button id="delete-btn" class="btn btn-danger" type="button" (click)="onDelete()">
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   </form>
