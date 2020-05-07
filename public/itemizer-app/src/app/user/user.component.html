@@ -41,8 +41,12 @@
         {{ signUp ? "Signup" : "Login" }}
       </button>
       <span class="col-xs-5"></span>
-      <button *ngIf="!signUp" class="btn btn-secondary" type="button" (click)="signup()">
+      <!-- Toggle Signup state when trying to log in -->
+      <button *ngIf="!signUp" class="btn btn-secondary" type="button" (click)="toggleSignup()">
         {{ "Signup" }}
+      </button>
+      <button *ngIf="signUp" class="btn btn-danger" type="button" (click)="cancel()">
+        {{ "Cancel" }}
       </button>
     </div>
   </form>

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from './user.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { User } from './user.model';
 
 @Component({
@@ -10,7 +11,7 @@ import { User } from './user.model';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit, OnDestroy {
-
+  errorMessage: String = '';
   signUp: Boolean = false;
 
   constructor(private userService: UserService, private router: Router) { }
@@ -23,37 +24,43 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(f: NgForm) {
-    const userEmail = f.controls['email'].value
-    const userPassword = f.controls['password'].value
+    if (!f.valid) {
+      console.log('form invalid');
+      return;
+    }
 
-    console.debug(`userEmail: ${userEmail}, userPassword: ${userPassword}`)
+    const userEmail = f.controls['email'].value;
+    const userPassword = f.controls['password'].value;
+
+    let userOservable: Observable<User>;
 
     if (!this.signUp) {
-      this.userService.loginUser(userEmail, userPassword).subscribe((user: User) => {
-        console.debug(JSON.stringify(user))
-        // @TODO use NGRX methods to store auth token
-        localStorage.setItem('authToken', user['token'])
-        console.log(`authToken: ${localStorage.getItem('authToken')}`)
-        this.router.navigate(['items']);
-      }, (error) => {
-        console.error(error)
-      })
+      userOservable = this.userService.loginUser(userEmail, userPassword);
     } else {
       const name = f.controls['name'].value;
-      this.userService.createUser(name, userEmail, userPassword).subscribe((user: User) => {
-        console.debug(JSON.stringify(user))
-        // @TODO use NGRX methods to store auth token
-        localStorage.setItem('authToken', user['token'])
-        console.log(`authToken: ${localStorage.getItem('authToken')}`)
-        this.router.navigate(['items']);
-      }, (error) => {
-        console.error(error)
-      })
+      userOservable = this.userService.createUser(name, userEmail, userPassword);
     }
+
+    userOservable.subscribe((user: User) => {
+        // @TODO use NGRX methods to store auth token
+        console.log(`user: ${JSON.stringify(user)}}`)
+        localStorage.setItem('authToken', user.token.toString())
+        this.router.navigate(['items']);
+    }, (err) => {
+      console.error(err);
+      this.errorMessage = err.toString();
+    });
+
+    f.reset();
   }
 
-  signup() {
-    this.signUp = true;
+  cancel() {
+    this.signUp = false;
+    this.router.navigate(['/']);
+  }
+
+  toggleSignup() {
+    this.signUp = !this.signUp;
   }
 
 }

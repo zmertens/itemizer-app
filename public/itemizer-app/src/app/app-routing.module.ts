@@ -7,10 +7,10 @@ import { UserComponent } from './user/user.component';
 
 
 const routes: Routes = [
+  {path:'', redirectTo: 'user', pathMatch: 'full'},
   {path:'items', component: ItemListComponent, canActivate: [AuthGuard]},
   {path:'add-item', component: AddItemComponent, canActivate: [AuthGuard]},
   {path:'user', component: UserComponent},
-  {path:'', redirectTo: 'items', pathMatch: 'full'},
   {path:'**', redirectTo: '/'}];
 
 @NgModule({

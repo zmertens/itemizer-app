@@ -1,4 +1,8 @@
 <div id="item-list" class="container">
+  <div class="row">
+    <button class="btn btn-primary" type="button" (click)="addItem()">Add Item</button>
+  </div>
+  <div class="row">
   <ul class="list-group" *ngFor="let item of items; let i = index">
     <li href="#" routerLinkActive="active" (click)="onSelect(item)">
       <a [routerLink]="['add-item', i]">
@@ -7,4 +11,5 @@
       </a>
     </li>
   </ul>
+</div>
 </div>

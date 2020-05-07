@@ -35,6 +35,10 @@ export class ItemListComponent implements OnInit, OnDestroy {
     this.items = [];
   }
 
+  addItem() {
+    
+  }
+
   onSelect(item: Item) {
     console.log(`value of i: ${JSON.stringify(item)}`);
   }
