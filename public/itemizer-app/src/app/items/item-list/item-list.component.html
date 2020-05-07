@@ -1,15 +1,26 @@
 <div id="item-list" class="container">
   <div class="row">
-    <button class="btn btn-primary" type="button" (click)="addItem()">Add Item</button>
+    <button id="add-btn" class="btn btn-primary" type="button" (click)="addItem()">
+      Add Item
+    </button>
+    <ul id="currency-dropdown" class="dropdown-menu">
+      <li id="currency">currency</li>
+    </ul>
   </div>
   <div class="row">
-  <ul class="list-group" *ngFor="let item of items; let i = index">
-    <li href="#" routerLinkActive="active" (click)="onSelect(item)">
-      <a [routerLink]="['add-item', i]">
-        {{ i }} Description: {{ item.description }} , $ Price:
-        {{ item.price }}
-      </a>
-    </li>
-  </ul>
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let item of items; let i = index"
+        routerLinkActive="active"
+        (click)="onSelect(item)"
+      >
+        <a [routerLink]="['add-item', item]">
+          {{ i }} Description: {{ item.description }} , $ Price:
+          {{ item.price }}
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
-</div>
+<router-outlet></router-outlet>

@@ -15,12 +15,12 @@ export class ItemService {
 
   constructor(private http: HttpClient) {}
 
-  createItem(item: Item, token: String) {
+  createItem(item: Item, token: String): Observable<Item> {
     const httpOptions = {
       headers: new HttpHeaders({ Authorization: token.toString() }),
     };
 
-    return this.http.post(
+    return this.http.post<Item>(
       this.url + '/items',
       { description: item['description'], price: item['price'] },
       httpOptions
@@ -44,25 +44,25 @@ export class ItemService {
     );
   }
 
-  updateItem(item: Item, token: String) {
+  updateItem(item: Item, token: String): Observable<Item> {
     const httpOptions = {
       headers: new HttpHeaders({ Authorization: token.toString() }),
       params: item['_id'],
     };
 
-    return this.http.patch(
+    return this.http.patch<Item>(
       this.url + '/items/:id',
       { description: item['description'], price: item['price'] },
       httpOptions
     );
   }
 
-  deleteItem(item: Item, token: String) {
+  deleteItem(item: Item, token: String): Observable<Item> {
     const httpOptions = {
       headers: new HttpHeaders({ Authorization: token.toString() }),
       params: item['_id'],
     };
 
-    return this.http.delete(this.url + '/items/:id', httpOptions);
+    return this.http.delete<Item>(this.url + '/items/:id', httpOptions);
   }
 }

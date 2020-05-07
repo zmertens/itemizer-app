@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ItemService } from '../item.service';
 import { Item } from '../item.model';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-item-list',
@@ -12,15 +13,13 @@ export class ItemListComponent implements OnInit, OnDestroy {
   items: Item[] = [];
   private itemsSubscription: Subscription;
 
-  constructor(private itemService: ItemService) {}
+  constructor(private itemService: ItemService, private router: Router) {}
 
   ngOnInit(): void {
     const authToken = 'Bearer ' + localStorage.getItem('authToken');
     this.itemsSubscription = this.itemService.getItems(authToken).subscribe(
       (items: Item[]) => {
-        console.debug(
-          `ngOnInit - item get subscription\r\n: ${JSON.stringify(items)}`
-        );
+        console.log(`ngOnInit - items.length[]: ${items.length}`);
         this.items = items;
       },
       (error) => {
@@ -30,13 +29,13 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.debug('Inside item-list component ngOnDestroy');
+    console.log('Inside item-list component ngOnDestroy');
     this.itemsSubscription.unsubscribe();
     this.items = [];
   }
 
   addItem() {
-    
+    this.router.navigate(['add-item']);
   }
 
   onSelect(item: Item) {
