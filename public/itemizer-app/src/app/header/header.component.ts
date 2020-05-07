@@ -14,8 +14,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated: Boolean = false;
   private userSubscription: Subscription;
 
-  items = []
-
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
@@ -24,12 +22,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.localStorageEmail = emailFromStorage
     }
 
-    this.userSubscription = this.userService.isLoggedIn().subscribe((user: User) => {
-      if (localStorage.getItem('authToken') !== '') {
+    this.userSubscription = this.userService.user.subscribe((user: User) => {
+      if (user !== null) {
+        console.log(`user: ${JSON.stringify(user)}`);
         this.isAuthenticated = true;
       } else {
         this.isAuthenticated = false;
       }
+      console.log(`authenticated? : ${this.isAuthenticated}`);
     })
   }
 
@@ -38,10 +38,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.isAuthenticated = !this.isAuthenticated
-    const token = 'Bearer ' + localStorage.getItem('authToken')
+    const token = 'Bearer ' + localStorage.getItem('authToken');
     this.userService.logoutUser(token).subscribe((user) => {
-      localStorage.setItem('authToken', '');
+      console.log('Logging out');
       this.router.navigate(['/']);
     })
   }

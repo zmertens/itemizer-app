@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { map, tap, catchError } from 'rxjs/operators';
 import { User } from './user.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ItemService } from '../items/item.service';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+
   user = new BehaviorSubject<User>(null);
 
   readonly url = environment.serverUrl;
@@ -20,37 +21,34 @@ export class UserService {
     userEmail: String,
     password: String
   ): Observable<User> {
-    return this.http
-      .post(this.url + '/users', {
-        name: name,
-        email: userEmail,
-        password: password,
-      })
-      .pipe();
-    // map((user) => {
-    //   this.user.next(user)
-    // }, catchError(error) => {
-    //   console.error(error);
-    // })
-    // )
+    return this.http.post<User>(
+      this.url + '/users',
+      new User(name, userEmail, password)
+    ).pipe(catchError(this.handleError), tap(responseData =>
+      this.handleAuthentication(responseData.name, responseData.email, responseData.token)
+    ));
   }
 
   loginUser(userEmail, password): Observable<User> {
-    return this.http.post(this.url + '/users/login', {
+    return this.http.post<User>(this.url + '/users/login', {
       email: userEmail,
       password: password,
-    });
+    }).pipe(catchError(this.handleError), tap(responseData =>
+      this.handleAuthentication(responseData.name, responseData.email, responseData.token)
+    ));
   }
 
   logoutUser(token: String): Observable<void | User> {
     const header = new HttpHeaders({ Authorization: token.toString() });
     return this.http
-      .post(this.url + '/users/logout', {}, { headers: header })
+      .post<User>(this.url + '/users/logout', {}, { headers: header })
       .pipe(
-        map((user) => {
-          console.log(`logging out user: ${JSON.stringify(user)}`);
+        map((responseData) => {
           this.itemService.items = [];
-          return user;
+          this.user.next(null);
+          localStorage.setItem('authToken', '');
+          // Response is normally empty
+          return responseData;
         }),
         catchError((err) => {
           throw new Error('Failed to log out user: ' + err);
@@ -58,7 +56,17 @@ export class UserService {
       );
   }
 
-  isLoggedIn(): Observable<User> {
-    return this.user.asObservable();
+  private handleAuthentication(name: String, email: String, token: String) {
+    let newUser = new User(name, email, token);
+    this.user.next(newUser);
+    localStorage.setItem('authToken', token.toString());
+  }
+
+  private handleError(err: HttpErrorResponse) {
+    const errorMessage = 'Error: Invalid login or signup!!';
+    if (!err.error || !err.error.error) {
+      return throwError(errorMessage);
+    }
+    return throwError(errorMessage)
   }
 }

@@ -35,7 +35,6 @@ export class ItemService {
           // Using the spread operator we only copy and append unique items
           this.items.push(...items);
           this.itemsSubject.next(this.items.slice());
-          console.log(this.items);
         }
         return items;
       }),
