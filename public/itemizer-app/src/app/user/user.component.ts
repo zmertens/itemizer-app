@@ -56,6 +56,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   cancel() {
     this.signUp = false;
+    this.errorMessage = '';
     this.router.navigate(['/']);
   }
 

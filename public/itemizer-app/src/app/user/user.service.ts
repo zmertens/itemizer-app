@@ -16,14 +16,21 @@ export class UserService {
 
   constructor(private http: HttpClient, private itemService: ItemService) {}
 
+  /**
+   * When creating a new user, post an <any> object - The client User model
+   *  does not have a password key which is what the backend expects.
+   * @param name
+   * @param userEmail 
+   * @param password 
+   */
   createUser(
     name: String,
     userEmail: String,
     password: String
   ): Observable<User> {
-    return this.http.post<User>(
+    return this.http.post<any>(
       this.url + '/users',
-      new User(name, userEmail, password)
+      { name: name, email: userEmail, password: password}
     ).pipe(catchError(this.handleError), tap(responseData =>
       this.handleAuthentication(responseData.name, responseData.email, responseData.token)
     ));

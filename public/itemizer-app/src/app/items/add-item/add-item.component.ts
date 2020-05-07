@@ -27,9 +27,11 @@ export class AddItemComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe(
       (param) => {
-        if (param.item) {
+        const itemIndex = Number(param.id);
+        if (itemIndex && itemIndex < this.itemService.items.length) {
+          console.log(`param.id: ${itemIndex}`);
           this.editMode = true;
-          this.itemToEdit = param.item;
+          this.itemToEdit = this.itemService.items[itemIndex];
           this.priceModel = this.itemToEdit.price;
           this.descModel = this.itemToEdit.description;
         } else {
@@ -37,7 +39,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
         }
       },
       (error) => {
-        console.error(`Item: ${error} does not exist!`);
+        console.error(`${error}, item: does not exist!`);
       }
     );
   }
@@ -66,6 +68,11 @@ export class AddItemComponent implements OnInit, OnDestroy {
       itemObs = this.itemService.createItem(newItem, authToken);
     }
 
+    itemObs.subscribe((item: Item) => {
+      console.log(`Created or edited item: ${JSON.stringify(item)}`);
+    });
+
+    this.onClear(f);
     this.router.navigate(['items']);
   }
 

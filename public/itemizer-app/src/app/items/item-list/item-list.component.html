@@ -15,7 +15,7 @@
         routerLinkActive="active"
         (click)="onSelect(item)"
       >
-        <a [routerLink]="['add-item', item]">
+        <a [routerLink]="['/add-item', i]">
           {{ i }} Description: {{ item.description }} , $ Price:
           {{ item.price }}
         </a>

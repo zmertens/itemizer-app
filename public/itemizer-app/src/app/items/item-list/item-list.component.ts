@@ -35,7 +35,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
 
   addItem() {
-    this.router.navigate(['add-item']);
+    this.router.navigate(['add-item/-1']);
   }
 
   onSelect(item: Item) {
