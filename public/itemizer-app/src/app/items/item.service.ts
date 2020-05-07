@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Item } from './item.model';
 
@@ -20,11 +20,15 @@ export class ItemService {
       headers: new HttpHeaders({ Authorization: token.toString() }),
     };
 
-    return this.http.post<Item>(
+    return this.http.post<any>(
       this.url + '/items',
-      { description: item['description'], price: item['price'] },
+      { description: item.description, price: item.price },
       httpOptions
-    );
+    ).pipe(map((item: Item) => {
+      this.items.push(item);
+      this.itemsSubject.next(this.items.slice());
+      return item;
+    }), catchError(this.handleError));
   }
 
   getItems(token: String): Observable<void | Item[]> {
@@ -50,11 +54,22 @@ export class ItemService {
       params: item['_id'],
     };
 
-    return this.http.patch<Item>(
+    return this.http.patch<any>(
       this.url + '/items/:id',
       { description: item['description'], price: item['price'] },
       httpOptions
-    );
+    ).pipe(map((item: Item) => {
+      const foundItemIndex = this.items.findIndex((i) => i.id === item.id);
+      if (foundItemIndex !== -1) {
+        this.items[foundItemIndex].description = item.description;
+        this.items[foundItemIndex].price = item.price;
+        this.itemsSubject.next(this.items.slice());
+      }
+      
+      return item;
+    }), catchError(() => {
+      throw new Error("Could not update item");
+    }));
   }
 
   deleteItem(item: Item, token: String): Observable<Item> {
@@ -63,6 +78,24 @@ export class ItemService {
       params: item['_id'],
     };
 
-    return this.http.delete<Item>(this.url + '/items/:id', httpOptions);
+    return this.http.delete<Item>(this.url + '/items/:id', httpOptions)
+    .pipe(map((item: Item) => {
+      const foundItemIndex = this.items.findIndex((i) => i.id === item.id);
+      if (foundItemIndex !== -1) {
+        delete this.items[foundItemIndex];
+      }
+      
+      return item;
+    }), catchError(() => {
+      throw new Error("Could not update item");
+    }));
+  }
+
+  private handleError(err: HttpErrorResponse) {
+    const errorMessage = 'Error: Invalid login or signup!!';
+    if (!err.error || !err.error.error) {
+      return throwError(errorMessage);
+    }
+    return throwError(errorMessage)
   }
 }

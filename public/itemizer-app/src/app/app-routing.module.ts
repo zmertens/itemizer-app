@@ -12,7 +12,7 @@ const routes: Routes = [
     component: ItemListComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'add-item', component: AddItemComponent, canActivate: [AuthGuard] },
+  { path: 'add-item/:id', component: AddItemComponent, canActivate: [AuthGuard] },
   { path: 'user', component: UserComponent },
   { path: '**', redirectTo: '/' },
 ];

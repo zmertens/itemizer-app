@@ -1,5 +1,7 @@
 <div class="container-fluid">
-  <span></span>
+  <div *ngIf="errorMessage.length !== 0" class="row">
+    {{ errorMessage }}
+  </div>
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <div *ngIf="signUp" class="form-group">
       <label for="email">name</label>

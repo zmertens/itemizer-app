@@ -25,30 +25,40 @@
         />
       </div>
     </div>
-    <div class="row">
-      <div class="col-xs-12 form-group">
-        <button class="btn btn-success" type="submit" [disabled]="!f.valid">
-          {{ editMode ? "Update" : "Add" }}
+    <div class="row col-xs-12 form-group">
+      <button
+        class="btn btn-success col-md-6"
+        type="submit"
+        [disabled]="!f.valid"
+      >
+        {{ editMode ? "Update" : "Add" }}
+      </button>
+      <button
+      *ngIf="editMode"
+        class="btn btn-warning col-md-6"
+        type="button"
+        (click)="onClear(f)"
+      >
+        Clear
+      </button>
+      <div class="row form-group">
+        <button
+          id="cancel-btn"
+          class="btn btn-secondary col-md-2"
+          type="button"
+          (click)="cancel()"
+        >
+          Cancel
         </button>
         <button
-          class="btn btn-danger"
+          *ngIf="editMode"
+          id="delete-btn"
+          class="btn btn-danger col-md-4"
           type="button"
           (click)="onDelete()"
-          *ngIf="editMode"
         >
           Delete
         </button>
-        <button class="btn btn-primary" type="button" (click)="onClear(f)">
-          Clear
-        </button>
-        <div class="row">
-          <button id="cancel-btn" class="btn btn-secondary" type="button" (click)="cancel()">
-            Cancel
-          </button>
-          <button id="delete-btn" class="btn btn-danger" type="button" (click)="onDelete()">
-            Delete
-          </button>
-        </div>
       </div>
     </div>
   </form>
