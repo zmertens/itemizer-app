@@ -1,0 +1,24 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a routerLink="/" class="navbar-brand">Itemizer</a>
+    </div>
+
+    <div class="navbar navbar-expand-lg navbar-light bg-light">
+      <ul class="nav navbar-nav">
+        <li routerLinkActive="active" *ngIf="!isAuthenticated">
+          <a routerLink="/user">Authenticate</a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/user">About</a>
+        </li>
+        <li routerLinkActive="active" *ngIf="isAuthenticated">
+          <a routerLink="/items">Items</a>
+        </li>
+        <li *ngIf="isAuthenticated">
+          <a style="cursor: pointer;" (click)="logout()">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

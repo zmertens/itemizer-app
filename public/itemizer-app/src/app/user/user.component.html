@@ -1,0 +1,55 @@
+<div class="container-fluid">
+  <div *ngIf="errorMessage.length !== 0" class="row">
+    {{ errorMessage }}
+  </div>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <div *ngIf="signUp" class="form-group">
+      <label for="email">name</label>
+      <input
+        name="name"
+        id="name"
+        class="form-control"
+        type="name"
+        placeholder=". . . name"
+        ngModel
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="email">email</label>
+      <input
+        name="email"
+        id="email"
+        class="form-control"
+        type="email"
+        placeholder="llama@mailinator.com"
+        ngModel
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="password">password</label>
+      <input
+        name="password"
+        id="password"
+        class="form-control"
+        type="password"
+        ngModel
+        required
+      />
+    </div>
+    <div class="form-group">
+      <button class="btn btn-success" type="submit" [disabled]="!f.valid">
+        {{ signUp ? "Signup" : "Login" }}
+      </button>
+      <span class="col-xs-5"></span>
+      <!-- Toggle Signup state when trying to log in -->
+      <button *ngIf="!signUp" class="btn btn-secondary" type="button" (click)="toggleSignup()">
+        {{ "Signup" }}
+      </button>
+      <button *ngIf="signUp" class="btn btn-danger" type="button" (click)="cancel()">
+        {{ "Cancel" }}
+      </button>
+    </div>
+  </form>
+</div>
