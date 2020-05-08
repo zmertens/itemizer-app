@@ -28,13 +28,19 @@ export class AddItemComponent implements OnInit, OnDestroy {
     this.routeSubscription = this.route.params.subscribe(
       (param) => {
         const itemIndex = Number(param.id);
-        if (itemIndex && itemIndex < this.itemService.items.length) {
+        if (itemIndex !== -1 && itemIndex < this.itemService.items.length) {
           console.log(`param.id: ${itemIndex}`);
           this.editMode = true;
-          this.itemToEdit = this.itemService.items[itemIndex];
+          this.itemToEdit = new Item(
+            this.itemService.items[itemIndex]['_id'],
+            this.itemService.items[itemIndex]['description'],
+            this.itemService.items[itemIndex]['price']
+          );
           this.priceModel = this.itemToEdit.price;
           this.descModel = this.itemToEdit.description;
         } else {
+          this.priceModel = null;
+          this.descModel = null;
           this.editMode = false;
         }
       },
@@ -45,6 +51,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.editMode = true;
     this.routeSubscription.unsubscribe();
   }
 
@@ -62,6 +69,8 @@ export class AddItemComponent implements OnInit, OnDestroy {
     let itemObs: Observable<Item>;
 
     if (this.editMode) {
+      this.itemToEdit.price = price;
+      this.itemToEdit.description = desc;
       itemObs = this.itemService.updateItem(this.itemToEdit, authToken);
     } else {
       const newItem = new Item(0, desc, price);
@@ -81,8 +90,12 @@ export class AddItemComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    const authToken = localStorage.getItem('authToken');
-    this.itemService.deleteItem(this.itemToEdit, authToken);
+    const authToken = 'Bearer ' + localStorage.getItem('authToken');
+    this.itemService.deleteItem(this.itemToEdit, authToken).subscribe((item) => {
+      console.log(`Deleting item: ${item}`);
+    }, (err) => {
+      console.log(`Error deleting item: ${err}`);
+    })
     this.router.navigate(['items']);
   }
 
