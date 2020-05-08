@@ -34,32 +34,32 @@
         {{ editMode ? "Update" : "Add" }}
       </button>
       <button
-      *ngIf="editMode"
+        *ngIf="!editMode"
         class="btn btn-warning col-md-6"
         type="button"
         (click)="onClear(f)"
       >
         Clear
       </button>
-      <div class="row form-group">
-        <button
-          id="cancel-btn"
-          class="btn btn-secondary col-md-2"
-          type="button"
-          (click)="cancel()"
-        >
-          Cancel
-        </button>
-        <button
-          *ngIf="editMode"
-          id="delete-btn"
-          class="btn btn-danger col-md-4"
-          type="button"
-          (click)="onDelete()"
-        >
-          Delete
-        </button>
-      </div>
+    </div>
+    <div class="row form-group">
+      <button
+        id="cancel-btn"
+        class="btn btn-secondary col-md-2"
+        type="button"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+      <button
+        *ngIf="editMode"
+        id="delete-btn"
+        class="btn btn-danger col-md-4"
+        type="button"
+        (click)="onDelete()"
+      >
+        Delete
+      </button>
     </div>
   </form>
 </div>
