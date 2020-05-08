@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class ItemListComponent implements OnInit, OnDestroy {
   items: Item[] = [];
+  currency: String = '';
   private itemsSubscription: Subscription;
 
   constructor(private itemService: ItemService, private router: Router) {}
