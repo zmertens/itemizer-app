@@ -65,7 +65,7 @@ export class ItemService {
 
     return this.http
       .patch<any>(
-        this.url + `/items/${item.id}`,
+        this.url + `/items/${item['_id']}`,
         { description: item['description'], price: item['price'] },
         httpOptions
       )
@@ -82,25 +82,25 @@ export class ItemService {
       );
   }
 
-  deleteItem(item: Item, token: String): Observable<Item> {
+  deleteItem(itemId: Number, token: String): Observable<Item> {
     const httpOptions = {
       headers: new HttpHeaders({ Authorization: token.toString() }),
     };
 
     return this.http
-      .delete<Item>(this.url + `/items/${item.id}`, httpOptions)
+      .delete<Item>(this.url + `/items/${itemId}`, httpOptions)
       .pipe(
         map((item: Item) => {
-          const foundItemIndex = this.items.findIndex((i) => i.id === item.id);
+          const foundItemIndex = this.items.findIndex((i) => i.id === itemId);
           if (foundItemIndex !== -1) {
-            this.items.splice(foundItemIndex);
+            this.items.splice(foundItemIndex, 1);
             this.itemsSubject.next(this.items.slice());
           }
 
           return item;
         }),
         catchError(() => {
-          throw new Error('Could not delete item');
+          throw new Error(itemId.toString());
         })
       );
   }

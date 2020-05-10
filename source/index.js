@@ -4,8 +4,8 @@
 
  const itemizerApp = require('./itemizer-app')
 
- itemizerApp('Stuff').then((result) => {
-     console.log(`result: ${result}`)
- }).catch((err) => {
-     console.error(err)
- })
+const port = process.env.PORT
+
+itemizerApp.listen(port, () => {
+    console.debug(`Server is running on port: ${port}`)
+})

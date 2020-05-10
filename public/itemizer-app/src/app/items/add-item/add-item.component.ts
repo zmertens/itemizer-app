@@ -5,6 +5,10 @@ import { Item } from '../item.model';
 import { ItemService } from '../item.service';
 import { Observable, Subscription } from 'rxjs';
 
+/**
+ * The add-item component handles all stages of item life:
+ *  add / edit / update / deletions
+ */
 @Component({
   selector: 'app-add-item',
   templateUrl: './add-item.component.html',
@@ -27,17 +31,26 @@ export class AddItemComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe(
       (param) => {
+        console.log(`param.id: ${param.id}`);
         const itemIndex = Number(param.id);
         if (itemIndex !== -1 && itemIndex < this.itemService.items.length) {
-          console.log(`param.id: ${itemIndex}`);
+          const authToken = 'Bearer ' + localStorage.getItem('authToken');
+          this.itemService.getItems(authToken).subscribe((items: Item[]) => {
+            this.itemToEdit = items[itemIndex];
+            this.priceModel = this.itemToEdit.price;
+            this.descModel = this.itemToEdit.description;
+          }, (err) => {
+            console.error(err);
+          });
+
           this.editMode = true;
-          this.itemToEdit = new Item(
-            this.itemService.items[itemIndex]['_id'],
-            this.itemService.items[itemIndex]['description'],
-            this.itemService.items[itemIndex]['price']
-          );
-          this.priceModel = this.itemToEdit.price;
-          this.descModel = this.itemToEdit.description;
+          // this.itemToEdit = new Item(
+          //   this.itemService.items[itemIndex]['_id'],
+          //   this.itemService.items[itemIndex]['description'],
+          //   this.itemService.items[itemIndex]['price']
+          // );
+          // this.priceModel = this.itemToEdit.price;
+          // this.descModel = this.itemToEdit.description;
         } else {
           this.priceModel = null;
           this.descModel = null;
@@ -91,7 +104,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
 
   onDelete() {
     const authToken = 'Bearer ' + localStorage.getItem('authToken');
-    this.itemService.deleteItem(this.itemToEdit, authToken).subscribe((item) => {
+    this.itemService.deleteItem(this.itemToEdit['_id'], authToken).subscribe((item) => {
       console.log(`Deleting item: ${item}`);
     }, (err) => {
       console.log(`Error deleting item: ${err}`);
