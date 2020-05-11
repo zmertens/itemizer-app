@@ -34,23 +34,18 @@ export class AddItemComponent implements OnInit, OnDestroy {
         console.log(`param.id: ${param.id}`);
         const itemIndex = Number(param.id);
         if (itemIndex !== -1 && itemIndex < this.itemService.items.length) {
-          const authToken = 'Bearer ' + localStorage.getItem('authToken');
-          this.itemService.getItems(authToken).subscribe((items: Item[]) => {
-            this.itemToEdit = items[itemIndex];
-            this.priceModel = this.itemToEdit.price;
-            this.descModel = this.itemToEdit.description;
-          }, (err) => {
-            console.error(err);
-          });
+          this.itemSubscription = this.itemService.getItems().subscribe(
+            (items: Item[]) => {
+              this.itemToEdit = items[itemIndex];
+              this.priceModel = this.itemToEdit.price;
+              this.descModel = this.itemToEdit.description;
+            },
+            (err) => {
+              console.error(err);
+            }
+          );
 
           this.editMode = true;
-          // this.itemToEdit = new Item(
-          //   this.itemService.items[itemIndex]['_id'],
-          //   this.itemService.items[itemIndex]['description'],
-          //   this.itemService.items[itemIndex]['price']
-          // );
-          // this.priceModel = this.itemToEdit.price;
-          // this.descModel = this.itemToEdit.description;
         } else {
           this.priceModel = null;
           this.descModel = null;
@@ -66,6 +61,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.editMode = true;
     this.routeSubscription.unsubscribe();
+    this.itemSubscription.unsubscribe();
   }
 
   onSubmit(f: NgForm) {
@@ -77,17 +73,15 @@ export class AddItemComponent implements OnInit, OnDestroy {
     const price = f.controls['price'].value;
     const desc = f.controls['description'].value;
 
-    const authToken = 'Bearer ' + localStorage.getItem('authToken');
-
     let itemObs: Observable<Item>;
 
     if (this.editMode) {
       this.itemToEdit.price = price;
       this.itemToEdit.description = desc;
-      itemObs = this.itemService.updateItem(this.itemToEdit, authToken);
+      itemObs = this.itemService.updateItem(this.itemToEdit);
     } else {
       const newItem = new Item(0, desc, price);
-      itemObs = this.itemService.createItem(newItem, authToken);
+      itemObs = this.itemService.createItem(newItem);
     }
 
     itemObs.subscribe((item: Item) => {
@@ -103,12 +97,14 @@ export class AddItemComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    const authToken = 'Bearer ' + localStorage.getItem('authToken');
-    this.itemService.deleteItem(this.itemToEdit['_id'], authToken).subscribe((item) => {
-      console.log(`Deleting item: ${item}`);
-    }, (err) => {
-      console.log(`Error deleting item: ${err}`);
-    })
+    this.itemService.deleteItem(this.itemToEdit['_id']).subscribe(
+      (item) => {
+        console.log(`Deleting item: ${item}`);
+      },
+      (err) => {
+        console.log(`Error deleting item: ${err}`);
+      }
+    );
     this.router.navigate(['items']);
   }
 

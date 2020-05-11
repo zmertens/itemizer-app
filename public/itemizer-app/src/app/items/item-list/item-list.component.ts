@@ -17,8 +17,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   constructor(private itemService: ItemService, private router: Router) {}
 
   ngOnInit(): void {
-    const authToken = 'Bearer ' + localStorage.getItem('authToken');
-    this.itemsSubscription = this.itemService.getItems(authToken).subscribe(
+    this.itemsSubscription = this.itemService.getItems().subscribe(
       (items: Item[]) => {
         console.log(`ngOnInit - items.length[]: ${items.length}`);
         this.items = items;
