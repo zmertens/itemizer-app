@@ -61,7 +61,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.editMode = true;
     this.routeSubscription.unsubscribe();
-    this.itemSubscription.unsubscribe();
+    // this.itemSubscription.unsubscribe();
   }
 
   onSubmit(f: NgForm) {
