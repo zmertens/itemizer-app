@@ -2,6 +2,7 @@
   "name": "itemizer-app",
   "version": "1.0.0",
   "description": "This app creates inventory lists and tracks prices",
+  "homepage": "https://zmertens.github.io/itemizer-app",
   "engines": {
     "node": "12.16.x",
     "npm": "6.14.4"
