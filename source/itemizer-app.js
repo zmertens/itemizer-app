@@ -7,6 +7,7 @@ const itemRouter = require('./routers/item')
 
 const itemizerApp = express()
 
+// DELETE THIS COMMETNS
 itemizerApp.use(express.json())
 let corsOptions = { origin: 'http://localhost:4200', credentials: false }
 itemizerApp.use(cors(corsOptions))
