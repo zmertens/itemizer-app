@@ -106,3 +106,6 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+
+# Leave docs/ directory for GitHub Pages to work on <master> branch
+!docs
