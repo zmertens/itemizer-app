@@ -45,17 +45,14 @@ export class UserService {
     ));
   }
 
-  logoutUser(token: String): Observable<void | User> {
-    const header = new HttpHeaders({ Authorization: token.toString() });
+  logoutUser(): Observable<void | User> {
     return this.http
-      .post<User>(this.url + '/users/logout', {}, { headers: header })
+      .post<User>(this.url + '/users/logout', {})
       .pipe(
-        map((responseData) => {
+        tap((responseData) => {
           this.itemService.items = [];
           this.user.next(null);
           localStorage.setItem('authToken', '');
-          // Response is normally empty
-          return responseData;
         }),
         catchError((err) => {
           throw new Error('Failed to log out user: ' + err);

@@ -38,8 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    const token = 'Bearer ' + localStorage.getItem('authToken');
-    this.userService.logoutUser(token).subscribe((user) => {
+    this.userService.logoutUser().subscribe((user) => {
       console.log('Logging out');
       this.router.navigate(['/']);
     })

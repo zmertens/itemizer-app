@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node source/index.js",
-    "dev": "env-cmd -f ./config/dev.env nodemon source/index.js",
+    "dev": "env-cmd -f ./config/dev.env nodemon server/index.js",
     "test": "env-cmd -f ./config/test.env jest ./tests/ --detectOpenHandles"
   },
   "jest": {
