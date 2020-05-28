@@ -2,6 +2,7 @@
   "name": "itemizer-app",
   "version": "1.0.0",
   "description": "This app creates inventory lists and tracks prices",
+  "homepage": "https://zmertens-itemizer-app.herokuapp.com/",
   "main": "index.js",
   "scripts": {
     "start": "node source/index.js",
