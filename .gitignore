@@ -70,9 +70,8 @@ web_modules/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-.env.test
+# dotenv environment variables file and config files
+config/
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -107,3 +106,6 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+
+# Leave docs/ directory for GitHub Pages to work on <master> branch
+!docs

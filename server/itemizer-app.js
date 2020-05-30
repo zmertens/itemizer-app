@@ -9,8 +9,8 @@ const itemizerApp = express();
 
 itemizerApp.use(express.json());
 let corsOptions = {
-  origin: ["http://localhost:4200", "https://zmertens.github.io/itemizer-app"],
-  credentials: false,
+    origin: ["http://localhost:4200", "https://zmertens.github.io/itemizer-app"],
+    credentials: false,
 };
 itemizerApp.use(cors(corsOptions));
 itemizerApp.options("*", cors());
