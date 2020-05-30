@@ -5,11 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ItemListComponent } from './items/item-list/item-list.component';
-<<<<<<< HEAD
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-=======
-import { HttpClientModule } from '@angular/common/http';
->>>>>>> heroku/master
 import { ItemService } from './items/item.service';
 import { AddItemComponent } from './items/add-item/add-item.component';
 import { FormsModule } from '@angular/forms';
