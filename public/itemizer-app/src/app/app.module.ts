@@ -15,10 +15,7 @@ import { AddItemComponent } from './items/add-item/add-item.component';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './user/user.service';
 import { UserComponent } from './user/user.component';
-<<<<<<< HEAD
 import { UserInterceptor } from './user/user.interceptor';
-=======
->>>>>>> heroku/master
 
 @NgModule({
   declarations: [
@@ -34,15 +31,11 @@ import { UserInterceptor } from './user/user.interceptor';
     HttpClientModule,
     FormsModule
   ],
-<<<<<<< HEAD
   providers: [ItemService, UserService, {
     provide: HTTP_INTERCEPTORS,
     useClass: UserInterceptor,
     multi: true
   }],
-=======
-  providers: [ItemService, UserService],
->>>>>>> heroku/master
   bootstrap: [AppComponent]
 })
 export class AppModule { }
