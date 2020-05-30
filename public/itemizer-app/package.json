@@ -1,12 +1,12 @@
 {
   "name": "itemizer-app",
-  "version": "0.0.0",
+  "version": "0.5.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --aot --port 4200",
     "dev": "ng serve --aot --port 4200",
     "build": "ng build",
-    "build:prod": "ng build --prod --base-href=https://zmertens.github.io/itemizer-app",
+    "build:prod": "ng build --prod --base-href https://zmertens.github.io/itemizer-app/docs",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
