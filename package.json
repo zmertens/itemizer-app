@@ -5,7 +5,7 @@
   "homepage": "https://zmertens-itemizer-app.herokuapp.com/",
   "main": "index.js",
   "scripts": {
-    "start": "node source/index.js",
+    "start": "node server/index.js",
     "dev": "env-cmd -f ./config/dev.env nodemon server/index.js",
     "test": "env-cmd -f ./config/test.env jest ./tests/ --detectOpenHandles"
   },
