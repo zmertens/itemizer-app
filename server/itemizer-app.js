@@ -8,8 +8,12 @@ const itemRouter = require("./routers/item");
 const itemizerApp = express();
 
 itemizerApp.use(express.json());
+// itemizerApp.use(express.static('docs'));
 let corsOptions = {
-    origin: ["http://localhost:4200", "https://zmertens.github.io/itemizer-app"],
+    origin: [
+        "http://localhost:4200",
+        "https://zmertens.github.io/itemizer-app",
+    ],
     credentials: false,
 };
 itemizerApp.use(cors(corsOptions));
@@ -17,4 +21,11 @@ itemizerApp.options("*", cors());
 itemizerApp.use(userRouter);
 itemizerApp.use(itemRouter);
 
+/**
+ * This is necessary but not sure why
+ * https://itnext.io/express-server-for-an-angular-application-part-1-getting-started-2cd27de691bd
+ */
+itemizerApp.all("*", function (req, res) {
+    res.status(200).sendFile(`/`, { root: "docs" });
+});
 module.exports = itemizerApp;
