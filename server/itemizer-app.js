@@ -1,4 +1,3 @@
-const path = require('path');
 const express = require('express')
 const cors = require('cors')
 // Require db/mongoose so tests can have access
@@ -9,11 +8,18 @@ const itemRouter = require('./routers/item')
 const itemizerApp = express()
 
 itemizerApp.use(express.json())
-itemizerApp.use('/docs', express.static(path.join(__dirname, 'docs')));
-// let corsOptions = { origin: 'http://localhost:4200', credentials: false }
-// itemizerApp.use(cors(corsOptions))
-// itemizerApp.options('*', cors())
+// itemizerApp.use(express.static('docs'));
+let corsOptions = { origin: 'http://localhost:4200', credentials: false }
+itemizerApp.use(cors(corsOptions))
+itemizerApp.options('*', cors())
 itemizerApp.use(userRouter)
 itemizerApp.use(itemRouter)
 
+/**
+ * This is necessary but not sure why
+ * https://itnext.io/express-server-for-an-angular-application-part-1-getting-started-2cd27de691bd
+ */
+itemizerApp.all('*', function (req, res) {
+    res.status(200).sendFile(`/`, {root: 'docs'});
+});
 module.exports = itemizerApp
