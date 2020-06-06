@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from './user/user.service';
 import { UserComponent } from './user/user.component';
 import { UserInterceptor } from './user/user.interceptor';
+import { StoreModule } from '@ngrx/store';
+import * as fromApp from './store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { UserInterceptor } from './user/user.interceptor';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forRoot(fromApp.appReducer),
   ],
   providers: [ItemService, UserService, {
     provide: HTTP_INTERCEPTORS,
