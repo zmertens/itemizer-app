@@ -19,17 +19,17 @@ export class ItemListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.itemsSubscription = this.itemService.getItems().subscribe(
       (items: Item[]) => {
-        console.log(`ngOnInit - items.length[]: ${items.length}`);
+        // console.log(`ngOnInit - items.length[]: ${items.length}`);
         this.items = items;
       },
       (error) => {
-        console.error(error);
+        // console.error(error);
       }
     );
   }
 
   ngOnDestroy(): void {
-    console.log('Inside item-list component ngOnDestroy');
+    // console.log('Inside item-list component ngOnDestroy');
     this.itemsSubscription.unsubscribe();
     this.items = [];
   }
@@ -39,6 +39,6 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
 
   onSelect(item: Item) {
-    console.log(`value of i: ${JSON.stringify(item)}`);
+    // console.log(`value of i: ${JSON.stringify(item)}`);
   }
 }

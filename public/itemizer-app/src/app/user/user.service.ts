@@ -5,6 +5,7 @@ import { User } from './user.model';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ItemService } from '../items/item.service';
+import { MessegeService } from '../messege.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,7 +15,8 @@ export class UserService {
 
   readonly url = environment.serverUrl;
 
-  constructor(private http: HttpClient, private itemService: ItemService) {}
+  constructor(private http: HttpClient, private itemService: ItemService,
+    private messegeService: MessegeService) {}
 
   /**
    * When creating a new user, post an <any> object - The client User model
@@ -63,6 +65,7 @@ export class UserService {
   private handleAuthentication(name: String, email: String, token: String) {
     let newUser = new User(name, email, token);
     this.user.next(newUser);
+    this.messegeService.addMessage(`Loggin user: ${name}, email: ${email}\n`);
     localStorage.setItem('authToken', token.toString());
   }
 
