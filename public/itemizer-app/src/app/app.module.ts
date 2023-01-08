@@ -14,6 +14,7 @@ import { UserComponent } from './user/user.component';
 import { UserInterceptor } from './user/user.interceptor';
 import { MessegeComponent } from './messege/messege.component';
 import { AboutComponent } from './about/about.component';
+import { CurrencyPipe } from './currency.pipe';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AboutComponent } from './about/about.component';
     AddItemComponent,
     UserComponent,
     MessegeComponent,
-    AboutComponent
+    AboutComponent,
+    CurrencyPipe
   ],
   imports: [
     BrowserModule,

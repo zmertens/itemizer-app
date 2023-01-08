@@ -12,11 +12,7 @@
         Currency
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">US Dollars</a>
-        <a class="dropdown-item" href="#">Yen</a>
-        <a class="dropdown-item" href="#">Rupees</a>
-        <a class="dropdown-item" href="#">Pesos</a>
-        <a class="dropdown-item" href="#">Lasers</a>
+        <button class="dropdown-item" *ngFor="let currency of currencies" (click)="onDropdown(currency)"> {{ currency }}</button>
       </div>
     </div>
     <button
@@ -38,8 +34,8 @@
           (click)="onSelect(item)"
         >
           <a [routerLink]="['/add-item', i]">
-            {{ i }} Description: {{ item.description }} , $ Price:
-            {{ item.price }}
+            {{ i }} Description: {{ item.description }} , Price:
+            {{ item.price }} {{ currency | currency }}
           </a>
         </li>
       </ul>
