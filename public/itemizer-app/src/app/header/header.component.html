@@ -10,13 +10,13 @@
           <a routerLink="/user">Authenticate</a>
         </li>
         <li routerLinkActive="active">
-          <a routerLink="/user">About</a>
+          <a routerLink="/about">About</a>
         </li>
         <li routerLinkActive="active" *ngIf="isAuthenticated">
           <a routerLink="/items">Items</a>
         </li>
         <li *ngIf="isAuthenticated">
-          <a style="cursor: pointer;" (click)="logout()">Logout</a>
+          <a routerLink="/user" style="cursor: pointer;" (click)="logout()">Logout</a>
         </li>
       </ul>
     </div>

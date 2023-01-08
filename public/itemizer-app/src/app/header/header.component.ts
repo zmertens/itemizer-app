@@ -24,12 +24,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.userSubscription = this.userService.user.subscribe((user: User) => {
       if (user !== null) {
-        console.log(`user: ${JSON.stringify(user)}`);
+        // console.log(`user: ${JSON.stringify(user)}`);
         this.isAuthenticated = true;
       } else {
         this.isAuthenticated = false;
       }
-      console.log(`authenticated? : ${this.isAuthenticated}`);
+      // console.log(`authenticated? : ${this.isAuthenticated}`);
     })
   }
 
@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logout() {
     this.userService.logoutUser().subscribe((user) => {
-      console.log('Logging out');
+      // console.log('Logging out');
       this.router.navigate(['/']);
     })
   }

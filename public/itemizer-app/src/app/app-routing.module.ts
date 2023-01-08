@@ -4,6 +4,7 @@ import { ItemListComponent } from './items/item-list/item-list.component';
 import { AddItemComponent } from './items/add-item/add-item.component';
 import { AuthGuard } from './user/auth.guard';
 import { UserComponent } from './user/user.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user', pathMatch: 'full' },
@@ -14,6 +15,7 @@ const routes: Routes = [
   },
   { path: 'add-item/:id', component: AddItemComponent, canActivate: [AuthGuard] },
   { path: 'user', component: UserComponent },
+  { path: 'about', component: AboutComponent },
   { path: '**', redirectTo: '/' },
 ];
 
