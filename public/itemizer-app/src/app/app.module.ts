@@ -12,6 +12,9 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from './user/user.service';
 import { UserComponent } from './user/user.component';
 import { UserInterceptor } from './user/user.interceptor';
+import { MessegeComponent } from './messege/messege.component';
+import { AboutComponent } from './about/about.component';
+import { CurrencyPipe } from './currency.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { UserInterceptor } from './user/user.interceptor';
     HeaderComponent,
     ItemListComponent,
     AddItemComponent,
-    UserComponent
+    UserComponent,
+    MessegeComponent,
+    AboutComponent,
+    CurrencyPipe
   ],
   imports: [
     BrowserModule,

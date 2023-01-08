@@ -3,6 +3,7 @@ import { ItemService } from '../item.service';
 import { Item } from '../item.model';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { CURRENCIES } from '../CURRENCIES';
 
 @Component({
   selector: 'app-item-list',
@@ -11,7 +12,8 @@ import { Router } from '@angular/router';
 })
 export class ItemListComponent implements OnInit, OnDestroy {
   items: Item[] = [];
-  currency: String = '';
+  currencies: string[] = CURRENCIES;
+  currency: string = CURRENCIES[0];
   private itemsSubscription: Subscription;
 
   constructor(private itemService: ItemService, private router: Router) {}
@@ -19,17 +21,17 @@ export class ItemListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.itemsSubscription = this.itemService.getItems().subscribe(
       (items: Item[]) => {
-        console.log(`ngOnInit - items.length[]: ${items.length}`);
+        // console.log(`ngOnInit - items.length[]: ${items.length}`);
         this.items = items;
       },
       (error) => {
-        console.error(error);
+        // console.error(error);
       }
     );
   }
 
   ngOnDestroy(): void {
-    console.log('Inside item-list component ngOnDestroy');
+    // console.log('Inside item-list component ngOnDestroy');
     this.itemsSubscription.unsubscribe();
     this.items = [];
   }
@@ -39,6 +41,16 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
 
   onSelect(item: Item) {
-    console.log(`value of i: ${JSON.stringify(item)}`);
+    // console.log(`value of i: ${JSON.stringify(item)}`);
+  }
+
+  onDropdown(pickedCurrency: string) {
+    // console.log(pickedCurrency);
+    for (let currency of CURRENCIES) {
+      // console.log(`currency: ${currency}`);
+      if (pickedCurrency === currency) {
+        this.currency = pickedCurrency;
+      }
+    }
   }
 }

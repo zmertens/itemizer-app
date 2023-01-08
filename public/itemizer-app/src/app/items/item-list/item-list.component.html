@@ -1,13 +1,5 @@
-<div id="item-list" class="container">
+<div class="container">
   <div class="row">
-    <button
-      id="add-btn"
-      class="btn btn-primary"
-      type="button"
-      (click)="addItem()"
-    >
-      Add Item
-    </button>
     <div id="currency-dropdown" class="dropdown">
       <button
         class="btn btn-secondary dropdown-toggle"
@@ -20,14 +12,20 @@
         Currency
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">US Dollars</a>
-        <a class="dropdown-item" href="#">Yen</a>
-        <a class="dropdown-item" href="#">Rupees</a>
-        <a class="dropdown-item" href="#">Pesos</a>
-        <a class="dropdown-item" href="#">Lasers</a>
+        <button class="dropdown-item" *ngFor="let currency of currencies" (click)="onDropdown(currency)"> {{ currency }}</button>
       </div>
     </div>
-    <div class="row">
+    <button
+      id="add-btn"
+      class="btn btn-primary"
+      type="button"
+      (click)="addItem()"
+    >
+      Add Item
+    </button>
+  </div>
+  <hr>
+  <div id="item-list" class="row">
       <ul class="list-group">
         <li
           class="list-group-item"
@@ -36,12 +34,11 @@
           (click)="onSelect(item)"
         >
           <a [routerLink]="['/add-item', i]">
-            {{ i }} Description: {{ item.description }} , $ Price:
-            {{ item.price }}
+            {{ i }} Description: {{ item.description }} , Price:
+            {{ item.price }} {{ currency | currency }}
           </a>
         </li>
       </ul>
-    </div>
   </div>
-  <router-outlet></router-outlet>
+
 </div>

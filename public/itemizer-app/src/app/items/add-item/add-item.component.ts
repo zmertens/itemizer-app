@@ -31,7 +31,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe(
       (param) => {
-        console.log(`param.id: ${param.id}`);
+        // console.log(`param.id: ${param.id}`);
         const itemIndex = Number(param.id);
         if (itemIndex !== -1 && itemIndex < this.itemService.items.length) {
           this.itemSubscription = this.itemService.getItems().subscribe(
@@ -41,7 +41,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
               this.descModel = this.itemToEdit.description;
             },
             (err) => {
-              console.error(err);
+              // console.error(err);
             }
           );
 
@@ -53,7 +53,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
         }
       },
       (error) => {
-        console.error(`${error}, item: does not exist!`);
+        // console.error(`${error}, item: does not exist!`);
       }
     );
   }
@@ -66,7 +66,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
 
   onSubmit(f: NgForm) {
     if (f.invalid) {
-      console.error(f);
+      // console.error(f);
       return;
     }
 
@@ -85,7 +85,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
     }
 
     itemObs.subscribe((item: Item) => {
-      console.log(`Created or edited item: ${JSON.stringify(item)}`);
+      // console.log(`Created or edited item: ${JSON.stringify(item)}`);
     });
 
     this.onClear(f);
@@ -99,10 +99,10 @@ export class AddItemComponent implements OnInit, OnDestroy {
   onDelete() {
     this.itemService.deleteItem(this.itemToEdit['_id']).subscribe(
       (item) => {
-        console.log(`Deleting item: ${item}`);
+        // console.log(`Deleting item: ${item}`);
       },
       (err) => {
-        console.log(`Error deleting item: ${err}`);
+        // console.log(`Error deleting item: ${err}`);
       }
     );
     this.router.navigate(['items']);
