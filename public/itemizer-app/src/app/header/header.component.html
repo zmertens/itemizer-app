@@ -16,7 +16,7 @@
           <a routerLink="/items">Items</a>
         </li>
         <li *ngIf="isAuthenticated">
-          <a style="cursor: pointer;" (click)="logout()">Logout</a>
+          <a routerLink="/user" style="cursor: pointer;" (click)="logout()">Logout</a>
         </li>
       </ul>
     </div>
