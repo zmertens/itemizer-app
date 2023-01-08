@@ -25,7 +25,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   onSubmit(f: NgForm) {
     if (!f.valid) {
-      console.log('form invalid');
+      // console.log('form invalid');
       return;
     }
 
@@ -43,11 +43,11 @@ export class UserComponent implements OnInit, OnDestroy {
 
     userOservable.subscribe((user: User) => {
         // @TODO use NGRX methods to store auth token
-        console.log(`user: ${JSON.stringify(user)}}`)
+        // console.log(`user: ${JSON.stringify(user)}}`)
         localStorage.setItem('authToken', user.token.toString())
         this.router.navigate(['items']);
     }, (err) => {
-      console.error(err);
+      // console.error(err);
       this.errorMessage = err.toString();
     });
 
