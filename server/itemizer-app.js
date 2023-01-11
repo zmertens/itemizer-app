@@ -16,7 +16,11 @@ let corsOptions = {
     ],
     preflightContinue: true,
     credentials: false,
-    optionsSuccessStatus: 200
+    optionsSuccessStatus: 200,
+    allowedHeaders: [
+        "Content-Type,Authorization",
+        "Access-Control-Allow-Origin, *",
+    ],
 };
 itemizerApp.use(cors(corsOptions));
 itemizerApp.options("*", cors());
