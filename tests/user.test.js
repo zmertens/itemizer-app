@@ -1,14 +1,23 @@
 const request = require('supertest')
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
+<<<<<<< HEAD
+const User = require('../source/models/user')
+const app = require('../source/itemizer-app')
+=======
 const User = require('../server/models/user')
 const app = require('../server/itemizer-app')
+>>>>>>> dev
 
 
 const userOneId = new mongoose.Types.ObjectId()
 const userOne = {
     _id: userOneId,
+<<<<<<< HEAD
+    name: 'Vald',
+=======
     name: 'Vlad',
+>>>>>>> dev
     email: 'vlad@example.com',
     password: 'ThatPasss77!',
     tokens: [
