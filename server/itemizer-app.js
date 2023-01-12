@@ -15,12 +15,19 @@ let corsOptions = {
         "https://zmertens.github.io/itemizer-app",
     ],
     preflightContinue: true,
-    credentials: false,
     optionsSuccessStatus: 200,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
     allowedHeaders: [
-        "Content-Type,Authorization",
-        "Access-Control-Allow-Origin, *",
+        "Content-Type",
+        "Origin",
+        "X-Requested-With",
+        "Accept",
+        "x-client-key",
+        "x-client-token",
+        "x-client-secret",
+        "Authorization",
     ],
+    credentials: true,
 };
 itemizerApp.use(cors(corsOptions));
 itemizerApp.options("*", cors());
