@@ -14,7 +14,8 @@ let corsOptions = {
         "http://localhost:4200",
         "https://zmertens.github.io/itemizer-app",
         "https://zmertens.github.io/itemizer-app/docs",
-        "https://zmertens.github.io/itemizer-app/docs/user",
+        "https://zmertens.github.io/itemizer-app/docs/users",
+        "https://zmertens-itemizer-app.herokuapp.com/users/login",
         "https://zmertens-itemizer-app.herokuapp.com/"
     ],
     preflightContinue: true,
