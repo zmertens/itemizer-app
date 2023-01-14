@@ -10,14 +10,7 @@ const itemizerApp = express();
 itemizerApp.use(express.json());
 // itemizerApp.use(express.static('docs'));
 let corsOptions = {
-    origin: [
-        "http://localhost:4200",
-        "https://zmertens.github.io/itemizer-app",
-        "https://zmertens.github.io/itemizer-app/docs",
-        "https://zmertens.github.io/itemizer-app/docs/users",
-        "https://zmertens-itemizer-app.herokuapp.com/users/login",
-        "https://zmertens-itemizer-app.herokuapp.com/"
-    ],
+    origin: true,
     preflightContinue: true,
     optionsSuccessStatus: 200,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
