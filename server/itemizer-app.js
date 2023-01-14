@@ -12,9 +12,22 @@ itemizerApp.use(express.json());
 let corsOptions = {
     origin: [
         "http://localhost:4200",
-        "https://zmertens.github.io",
+        "https://zmertens.github.io/itemizer-app",
     ],
-    credentials: false,
+    preflightContinue: true,
+    optionsSuccessStatus: 200,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
+    allowedHeaders: [
+        "Content-Type",
+        "Origin",
+        "X-Requested-With",
+        "Accept",
+        "x-client-key",
+        "x-client-token",
+        "x-client-secret",
+        "Authorization",
+    ],
+    credentials: true,
 };
 itemizerApp.use(cors(corsOptions));
 itemizerApp.options("*", cors());

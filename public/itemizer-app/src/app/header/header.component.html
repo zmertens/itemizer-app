@@ -4,19 +4,19 @@
       <a routerLink="/" class="navbar-brand">Itemizer</a>
     </div>
 
-    <div class="navbar navbar-expand-lg navbar-light bg-light">
-      <ul class="nav navbar-nav">
-        <li routerLinkActive="active" *ngIf="!isAuthenticated">
-          <a routerLink="/user">Authenticate</a>
+    <div class="navbar navbar-light bg-light">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active" routerLinkActive="active" *ngIf="!isAuthenticated">
+          <a class="navbar-brand" routerLink="/user">Authenticate</a>
         </li>
-        <li routerLinkActive="active">
-          <a routerLink="/about">About</a>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="navbar-brand" routerLink="/about">About</a>
         </li>
-        <li routerLinkActive="active" *ngIf="isAuthenticated">
-          <a routerLink="/items">Items</a>
+        <li class="nav-item" routerLinkActive="active" *ngIf="isAuthenticated">
+          <a class="navbar-brand" routerLink="/items">Items</a>
         </li>
-        <li *ngIf="isAuthenticated">
-          <a routerLink="/user" style="cursor: pointer;" (click)="logout()">Logout</a>
+        <li class="nav-item" *ngIf="isAuthenticated">
+          <a class="navbar-brand" routerLink="/user" style="cursor: pointer;" (click)="logout()">Logout</a>
         </li>
       </ul>
     </div>
